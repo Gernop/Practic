@@ -1,0 +1,88 @@
+import numpy as np
+from scipy.interpolate import lagrange
+import matplotlib.pyplot as plt
+
+n_points = 10
+x_interval = (1, 2)
+
+x_points = np.linspace(x_interval[0], x_interval[1], n_points)
+y_points = np.sqrt(x_points)
+
+
+print("Сгенерированные точки:")
+for i, (x, y) in enumerate(zip(x_points, y_points)):
+    print(f"  x_{i} = {x:.3f}, y_{i} = {y:.3f}")
+
+poly = lagrange(x_points, y_points)
+
+print("Коэффициенты:")
+print(poly.coefficients)
+
+test_x = 1.5
+f_true = np.sqrt(test_x)
+f_interp = poly(test_x)
+delta = abs(f_true - f_interp)
+
+print(f"  Погрешность в точке {test_x} = {delta:.10f}")
+
+x_dense = np.linspace(0, 4, 400)
+y_true = np.sqrt(x_dense)
+y_lagrange = poly(x_dense)
+
+plt.figure(figsize=(9, 6))
+plt.plot(x_dense, y_true, 'k--')
+plt.plot(x_dense, y_lagrange, 'r-')
+plt.plot(x_points, y_points, 'bo')
+plt.axhline(0, color='gray', linewidth=0.5)
+plt.axvline(0, color='gray', linewidth=0.5)
+plt.xlabel('x')
+plt.ylabel('y')
+plt.grid(True, linestyle=':', alpha=0.7)
+plt.ylim(-0.2, 2)
+plt.show()
+
+
+
+import numpy as np
+from scipy.interpolate import lagrange
+import matplotlib.pyplot as plt
+
+n_points = 10
+x_interval = (-30, 30)
+
+x_points = np.linspace(x_interval[0], x_interval[1], n_points)
+y_points = np.abs(x_points)
+
+
+print("Сгенерированные точки:")
+for i, (x, y) in enumerate(zip(x_points, y_points)):
+    print(f"  x_{i} = {x:.3f}, y_{i} = {y:.3f}")
+
+poly = lagrange(x_points, y_points)
+
+print("Коэффициенты:")
+print(poly.coefficients)
+
+test_x = 0.5
+f_true = np.abs(test_x)
+f_interp = poly(test_x)
+delta = abs(f_true - f_interp)
+
+print(f"  Погрешность в точке {test_x} = {delta:.3f}")
+
+x_dense = np.linspace(-30, 
+                      30, 400)
+y_true = np.abs(x_dense)
+y_lagrange = poly(x_dense)
+
+plt.figure()
+plt.plot(x_dense, y_true, 'k--')
+plt.plot(x_dense, y_lagrange, 'r-')
+plt.plot(x_points, y_points, 'bo')
+plt.axhline(0, color='gray', linewidth=0.5)
+plt.axvline(0, color='gray', linewidth=0.5)
+plt.xlabel('x')
+plt.ylabel('y')
+plt.grid(True, linestyle=':', alpha=0.7)
+plt.ylim(-0.2, 30.5)
+plt.show()
